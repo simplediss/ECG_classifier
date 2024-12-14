@@ -1,0 +1,9 @@
+kagglehub==0.3.5
+kaggle
+loguru==0.7.3
+matplotlib
+numpy
+pandas
+scipy
+scikit-learn
+tqdm
