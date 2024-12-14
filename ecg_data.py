@@ -25,7 +25,7 @@ desc_to_code = partial(dataset.description_to_code, snomed=snomed)
 relevant_codes = snomed.index.to_list()
 
 
-flag = 0
+# Find a sample with myocardial ischemia and plot it.
 for path in samples_paths:
     header = load_hea(path)
     all_codes = header.codes
@@ -38,8 +38,3 @@ for path in samples_paths:
         plot_ecg(data/1000, SAMPLE_RATE)
         plt.show()
         break
-        # save_as_png(f'./myocardial_ischemia/{path.name}')
-        # flag += 1
-        # if flag == 2:
-        #     break
-        
