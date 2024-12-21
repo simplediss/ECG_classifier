@@ -29,7 +29,10 @@ class SampleHeader:
         return [int(code) for code in codes_str.split(',')]
     
     def filtered_codes(self, relevant_codes: list[int]) -> list[int]:
-        return [code for code in self.codes if code in relevant_codes]
+        filtered_codes_str = [str(code) for code in self.codes if code in relevant_codes]
+        filtered_codes_str = list(sorted(set(filtered_codes_str)))
+        filtered_codes_int = [int(code) for code in filtered_codes_str]
+        return filtered_codes_int
 
 
 def load_mat(path: Path) -> np.ndarray:
@@ -56,7 +59,8 @@ def load_sample(path: Path) -> tuple[np.ndarray, SampleHeader]:
 def get_samples_paths(data_dir: Path, limit_sample_length: tuple | int | None = None) -> list[Path]:
     """Get a list of all sample paths in the specified data directory."""
     samples_paths = []
-    for ds_path in data_dir.iterdir():
+    dirs = [dir for dir in data_dir.iterdir() if dir.is_dir()]
+    for ds_path in dirs:
         ds_samples_paths = sorted(set([i.with_suffix('') for i in ds_path.iterdir()]))
         samples_paths += list(ds_samples_paths)
     logger.info(f'Got total of {len(samples_paths):,} samples')
