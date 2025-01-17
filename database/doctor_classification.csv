@@ -1,0 +1,112 @@
+Classification,Dx,SNOMED CT Code
+HIGH,high t-voltage,251259000
+HIGH RISK: T wave inversion,t wave inversion,59931005
+irrelevant,decreased qt interval,77867006
+irrelevant,diffuse intraventricular block,82226007
+irrelevant,ventricular flutter,111288001
+irrelevant,u wave abnormal,164937009
+irrelevant,supraventricular bigeminy,251168009
+irrelevant,left ventricular strain,370365005
+irrelevant,chronic atrial fibrillation,426749004
+irrelevant,inferior ST segment depression,704997005
+irrelevant,idioventricular rhythm,49260003
+irrelevant,brady tachy syndrome,74615001
+irrelevant,ventricular escape rhythm,81898007
+irrelevant,congenital incomplete atrioventricular heart block,204384007
+irrelevant,paroxysmal atrial fibrillation,282825002
+irrelevant,rapid atrial fibrillation,314208002
+irrelevant,atrial bigeminy,251173003
+irrelevant,ventricular escape beat,75532003
+irrelevant,blocked premature atrial contraction,251170000
+irrelevant,heart valve disorder,368009
+irrelevant,atrioventricular junctional rhythm,29320008
+irrelevant,junctional tachycardia,426648003
+irrelevant,fusion beats,13640000
+irrelevant,heart failure,84114007
+irrelevant,wandering atrial pacemaker,195101003
+irrelevant,transient ischemic attack,266257000
+irrelevant,ventricular pre excitation,195060002
+irrelevant,sinoatrial block,65778007
+irrelevant,junctional escape,426995002
+irrelevant,r wave abnormal,164921003
+irrelevant,ventricular tachycardia,164895002
+irrelevant,right atrial abnormality,253339007
+irrelevant,paroxysmal ventricular tachycardia,425856008
+irrelevant,cardiac dysrhythmia,698247007
+irrelevant,accelerated junctional rhythm,426664006
+irrelevant,paired ventricular premature complexes,251182009
+irrelevant,paroxysmal supraventricular tachycardia,67198005
+irrelevant,ventricular trigeminy,251180001
+irrelevant,coronary heart disease,53741008
+irrelevant,ventricular fibrillation,164896001
+irrelevant,left atrial hypertrophy,446813000
+irrelevant,atrial fibrillation and flutter,195080001
+irrelevant,atrial tachycardia,713422000
+irrelevant,ventricular pacing pattern,251266004
+irrelevant,complete heart block,27885002
+irrelevant,atrial pacing pattern,251268003
+irrelevant,2nd degree av block,195042002
+irrelevant,atrial hypertrophy,195126007
+irrelevant,supraventricular tachycardia,426761007
+irrelevant,left atrial abnormality,253352002
+irrelevant,av block,233917008
+irrelevant,wolff parkinson white pattern,74390002
+irrelevant,ventricular bigeminy,11157007
+irrelevant,ventricular hypertrophy,266249003
+irrelevant,indeterminate cardiac axis,251200008
+irrelevant,chronic myocardial ischemia,413844008
+irrelevant,premature ventricular contractions,427172004
+irrelevant,left posterior fascicular block,445211001
+irrelevant,incomplete left bundle branch block,251120003
+irrelevant,right ventricular hypertrophy,89792004
+irrelevant,bradycardia,426627000
+irrelevant,pacing rhythm,10370003
+irrelevant,atrial flutter,164890007
+irrelevant,prolonged pr interval,164947007
+irrelevant,ventricular premature beats,17338001
+irrelevant,right axis deviation,47665007
+irrelevant,low qrs voltages,251146004
+irrelevant,s t changes,55930002
+irrelevant,qwave abnormal,164917005
+irrelevant,left bundle branch block,164909002
+irrelevant,old myocardial infarction,164867002
+irrelevant,left atrial enlargement,67741000119109
+irrelevant,st interval abnormal,164930006
+irrelevant,prolonged qt interval,111975006
+irrelevant,left anterior fascicular block,445118002
+irrelevant,ventricular ectopics,164884008
+irrelevant,st depression,429622005
+irrelevant,nonspecific st t abnormality,428750005
+irrelevant,t wave abnormal,164934002
+LOW,sinus node dysfunction,60423000
+LOW,junctional premature complex,251164006
+LOW,mobitz type i wenckebach atrioventricular block,54016002
+LOW,shortened pr interval,49578007
+LOW,suspect arm ecg leads reversed,251139008
+LOW,right atrial hypertrophy,446358003
+LOW,bundle branch block,6374002
+LOW,early repolarization,428417006
+LOW,supraventricular premature beats,63593006
+LOW,complete right bundle branch block,713427006
+LOW,nonspecific intraventricular conduction disorder,698252002
+LOW,sinus arrhythmia,427393009
+LOW,incomplete right bundle branch block,713426002
+LOW,premature atrial contraction,284470004
+LOW,sinus bradycardia,426177001
+LOW,1st degree av block,270492004
+LOW,right bundle branch block,59118001
+LOW,sinus tachycardia,427084000
+LOW,abnormal QRS,164951009
+LOW,atrial fibrillation,164889003
+LOW,left ventricular hypertrophy,164873001
+LOW,left axis deviation,39732003
+LOW,sinus rhythm,426783006
+STEMI: Anterior (V3-4),anterior ischemia,426434006
+"STEMI: Inferior (II, III, aVF)",inferior ischaemia,425419005
+"STEMI: Lateral (I + aVL, V5-6)",lateral ischaemia,425623009
+STEMI: Septal (V1-2),acute myocardial ischemia,413444003
+STEMI: Septal (V1-2),acute myocardial infarction,57054005
+STEMI: Septal (V1-2),anterior myocardial infarction,54329005
+STEMI: Septal (V1-2),st elevation,164931005
+STEMI: Septal (V1-2),myocardial ischemia,164861001
+STEMI: Septal (V1-2),myocardial infarction,164865005

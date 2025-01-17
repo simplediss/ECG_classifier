@@ -82,7 +82,8 @@ def create_relevant_snomed_mappings(snomed_dir: Path, csv_name: str) -> None:
         '425623009': 'lateral ischaemia',
         '426434006': 'anterior ischemia',
         '59931005': 't wave inversion',
-        '251259000': 'high t-voltage'
+        '251259000': 'high t-voltage',
+        '426783006': 'sinus rhythm'
     }
 
     df = pd.DataFrame(code_to_str, index=[0])

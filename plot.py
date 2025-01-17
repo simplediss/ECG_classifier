@@ -1,134 +1,143 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import AutoMinorLocator
+from math import ceil
 
 
 def plot_ecg(
-    ecg: np.ndarray,
-    sample_rate: int,
-    title: str = '',
-    bw: bool = True,
-    columns: int = 2,
-    row_height: int = 3,
-    show_lead_name: bool = True,
-    show_grid: bool = True,
-    separate_columns: bool = False,
-) -> None:
+        ecg, 
+        sample_rate    = 500, 
+        title          = '', 
+        lead_index     = ['I', 'II', 'III', 'aVR', 'aVL', 'aVF', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6'], 
+        lead_order     = None,
+        style          = 'bw',
+        columns        = 2,
+        row_height     = 3,
+        show_lead_name = True,
+        show_grid      = True,
+        show_separate_line  = False,
+        ):
+    """Plot multi lead ECG chart.
+
+    Modified from https://github.com/dy1901/ecg_plot/
+    # Arguments
+        ecg        : m x n ECG signal data, which m is number of leads and n is length of signal.
+        sample_rate: Sample rate of the signal.
+        title      : Title which will be shown on top off chart
+        lead_index : Lead name array in the same order of ecg, will be shown on 
+            left of signal plot, defaults to ['I', 'II', 'III', 'aVR', 'aVL', 'aVF', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6']
+        lead_order : Lead display order 
+        columns    : display columns, defaults to 2
+        style      : display style, defaults to None, can be 'bw' which means black white
+        row_height :   how many grid should a lead signal have,
+        show_lead_name : show lead name
+        show_grid      : show grid
+        show_separate_line  : show separate line
     """
-    Plot a standard 12-lead ECG layout similar to a printed ECG:
-    Left column: I, II, III, aVR, aVL, aVF
-    Right column: V1, V2, V3, V4, V5, V6
-    Scales: 25 mm/s horizontally, 1 cm/mV vertically.
-    Each large square: 0.4 s horizontally, 1 mV vertically.
 
-    Args:
-        ecg: [12, n] ECG signal data (12 leads, n samples each)
-        sample_rate: Sampling frequency (Hz)
-        title: Chart title
-        bw: If True, black and white grid. Otherwise red grid lines and blue ECG traces.
-        show_lead_name: If True, display lead labels
-        show_grid: If True, show ECG grid
-    """
+    if not lead_order:
+        lead_order = list(range(0,len(ecg)))
+    secs  = len(ecg[0])/sample_rate
+    leads = len(lead_order)
+    rows  = int(ceil(leads/columns))
+    # display_factor = 2.5
+    display_factor = 2.5
+    line_width = 0.5
+    fig, ax = plt.subplots(figsize=(secs*columns * display_factor, rows * row_height / 5 * display_factor))
+    display_factor = display_factor ** 0.5
+    fig.subplots_adjust(
+        hspace = 0, 
+        wspace = 0,
+        left   = 0,  # the left side of the subplots of the figure
+        right  = 1,  # the right side of the subplots of the figure
+        bottom = 0,  # the bottom of the subplots of the figure
+        top    = 1
+        )
 
-    # Standard 12-lead ECG labeling
-    lead_names = ['I', 'II', 'III', 'aVR', 'aVL', 'aVF', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6']
-    # Order leads: limb leads in first column, precordial in second
-    # First column (6 leads): I (0), II (1), III (2), aVR(3), aVL(4), aVF(5)
-    # Second column (6 leads): V1(6), V2(7), V3(8), V4(9), V5(10), V6(11)
-    # We'll arrange in 2 columns, 6 rows each
-    columns = 2
-    rows = 6
-
-    # Compute total duration in seconds
-    secs = len(ecg[0]) / sample_rate
-
-    # Figure size: Adjust as you like, here width ~ seconds * columns
-    # and height ~ some factor of rows
-    display_factor = 1
-    fig, ax = plt.subplots(figsize=(secs * columns * display_factor, rows * 2 * display_factor - 2))
-    fig.subplots_adjust(hspace=0, wspace=0, left=0, right=1, bottom=0, top=0.95)
     fig.suptitle(title)
 
-    # Vertical positioning:
-    # We'll stack 6 leads in each column. Each lead separated by a certain vertical distance.
-    # Let's say each row_height = 10 units (arbitrary), each lead gets its own slot.
-    row_height = 4  # Adjust this as needed
-    y_min = - (rows * row_height) + (row_height / 4)
-    y_max = row_height / 4
-    # With 6 rows, the top lead sits near y_max, the bottom lead near y_min.
-
-    # Colors
-    if bw:
-        color_major = (0.4, 0.4, 0.4)
-        color_minor = (0.75, 0.75, 0.75)
-        color_line = (0, 0, 0)
-    else:
-        color_major = (1, 0, 0)       # Red major lines
-        color_minor = (1, 0.7, 0.7)   # Light red minor lines
-        color_line = (0, 0, 0.7)      # Blue ECG line
-
-    # Scales:
-    # Horizontal: 25 mm/s = 1 large square (10 mm) = 0.4 s
-    # We'll place major vertical lines at every 0.4 s
-    major_x_interval = 0.4
-    # Vertically: 10 mm per mV = 1 mV per large square
-    major_y_interval = 1.0
-
     x_min = 0
-    x_max = columns * secs
+    x_max = columns*secs
+    y_min = row_height/4 - (rows/2)*row_height
+    y_max = row_height/4
 
-    if show_grid:
-        ax.set_xticks(np.arange(x_min, x_max, major_x_interval))
-        ax.set_yticks(np.arange(y_min, y_max, major_y_interval))
+    if (style == 'bw'):
+        color_major = (0.4,0.4,0.4)
+        color_minor = (0.75, 0.75, 0.75)
+        color_line  = (0,0,0)
+    else:
+        color_major = (1,0,0)
+        color_minor = (1, 0.7, 0.7)
+        color_line  = (0,0,0.7)
+
+    plt.xlabel("25mm/s")
+    plt.ylabel("1cm/mV")
+    # plt.text(x_min + 0.1, y_min + 0.5, '\n', fontsize=9 * display_factor)
+
+    if(show_grid):
+        ax.set_xticks(np.arange(x_min,x_max,0.2))    
+        ax.set_yticks(np.arange(y_min,y_max,0.5))
+
+        ax.minorticks_on()
+        
         ax.xaxis.set_minor_locator(AutoMinorLocator(5))
-        ax.yaxis.set_minor_locator(AutoMinorLocator(5))
+
         ax.grid(which='major', linestyle='-', linewidth=0.5 * display_factor, color=color_major)
         ax.grid(which='minor', linestyle='-', linewidth=0.5 * display_factor, color=color_minor)
 
+    ax.set_ylim(y_min,y_max)
+    ax.set_xlim(x_min,x_max)
+
+
     # Remove axis numbers
-    # ax.set_xticklabels([])
-    # ax.set_yticklabels([])
+    ax.set_xticklabels([])
+    ax.set_yticklabels([])
     ax.set_ylim(y_min, y_max)
     ax.set_xlim(x_min, x_max)
 
     line_width = 1
 
-    # Plot the leads
-    for c in range(columns):
-        for r in range(rows):
-            idx = c * rows + r
-            if idx < len(ecg):
-                # Vertical offset: top lead near y_max, each subsequent lead lower by row_height
-                # Start from top going down:
-                # Let's say row 0 is at y_offset = 0 (near top), row 1 = -row_height, etc.
-                y_offset = -r * row_height
+    # Secondary x-axis for 1-second intervals (placed at the bottom)
+    sec_ax = ax.twiny()  # Create a secondary x-axis sharing the y-axis
 
-                # Horizontal offset for column
-                x_offset = c * secs
+    # Configure the secondary axis
+    sec_ax.set_xlim(x_min, x_max)  # Match the primary x-axis limits
+    sec_ax.set_xticks(np.arange(x_min, x_max + 1, 1))  # Major ticks at 1-second intervals
+    sec_ax.set_xticklabels([f"{int(t % secs)} s" for t in np.arange(x_min, x_max + 1, 1)])  # Label ticks with seconds
+    sec_ax.tick_params(axis='x', direction='in', length=secs, width=1, labelsize=10)  # Style the ticks
 
-                # Draw a vertical separating line between columns
-                if c == 1 and separate_columns:
-                    # Draw a thick line between the two columns, but only once
-                    # Let's place it at x_offset of the second column
-                    sep_x = secs  # end of first column
-                    ax.plot([sep_x, sep_x], [y_min, y_max],
-                            color='black', linewidth=line_width * 2)
+    # Move the secondary x-axis to the bottom of the plot
+    sec_ax.spines['top'].set_visible(False)  # Hide the top spine (default position for twiny)
+    sec_ax.spines['bottom'].set_position(('axes', -0.0))  # Position the axis below the plot
+    sec_ax.xaxis.set_label_position('bottom')
+    sec_ax.xaxis.tick_bottom()
 
-                # Plot lead name
-                if show_lead_name:
-                    ax.text(x_offset + 0.1, y_offset + 0.5, lead_names[idx], fontsize=18 * display_factor)
+    for c in range(0, columns):
+        for i in range(0, rows):
+            if (c * rows + i < leads):
+                y_offset = -(row_height/2) * ceil(i%rows)
+                # if (y_offset < -5):
+                #     y_offset = y_offset + 0.25
 
-                step = 1.0 / sample_rate
-                time_axis = np.arange(0, len(ecg[idx]) * step, step) + x_offset
+                x_offset = 0
+                if(c > 0):
+                    x_offset = secs * c
+                    if(show_separate_line):
+                        ax.plot([x_offset, x_offset], [ecg[t_lead][0] + y_offset - 0.3, ecg[t_lead][0] + y_offset + 0.3], linewidth=line_width * display_factor, color=color_line)
 
-                # Plot the ECG signal
+         
+                t_lead = lead_order[c * rows + i]
+         
+                step = 1.0/sample_rate
+                if(show_lead_name):
+                    ax.text(x_offset + 0.07, y_offset - 0.5, lead_index[t_lead], fontsize=9 * display_factor)
                 ax.plot(
-                    time_axis,
-                    ecg[idx] + y_offset,
-                    linewidth=line_width * display_factor,
+                    np.arange(0, len(ecg[t_lead])*step, step) + x_offset, 
+                    ecg[t_lead] + y_offset,
+                    linewidth=line_width * display_factor, 
                     color=color_line
-                )
-
+                    )
+        
 
 def save_as_png(path: str, dpi=200, layout='tight'):
     plt.ioff()
